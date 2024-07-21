@@ -1,24 +1,23 @@
-from time import sleep
 import RPi.GPIO as GPIO
+import time             
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
+pir = 11            
+buzzer = 13         
 
-pir = 17
-buzzer = 27
+# Настройка GPIO
+GPIO.setmode(GPIO.BOARD) 
+GPIO.setup(buzzer, GPIO.OUT)
+GPIO.setup(pir, GPIO.IN) 
 
-GPIO.setup(buzzer,GPIO.OUT)
-GPIO.setup(pir ,GPIO.IN)
+try:
+    while True:          
+        if GPIO.input(pir) == GPIO.HIGH:
+            GPIO.output(buzzer, GPIO.HIGH) 
+            print("Движение обнаружено") 
+        else:                
+            GPIO.output(buzzer, GPIO.LOW)
+            print("Нет движения") 
+        time.sleep(0.1)
 
-while True:
-	if GPIO.input(pir) == GPIO.HIGH:
-		GPIO.output(buzzer,GPIO.HIGH)
-		print("Движение обнаружено")
-		sleep(0.01)
-	else:
-		GPIO.output(buzzer,GPIO.LOW)
-		print("Нет движение")
-	
-	
-GPIO.cleanup()
-
+except KeyboardInterrupt:
+    GPIO.cleanup()
