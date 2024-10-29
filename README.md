@@ -1,3 +1,7 @@
+Modules check-list
+
+https://docs.google.com/spreadsheets/d/1N9kqMYqfp7b_HUQC-EZ9KCm1GTUWNQ8HOZxBEKizNbk/edit?gid=0#gid=0
+
 Про start.sh
 
 Если файл не запускается, то прописываем это
