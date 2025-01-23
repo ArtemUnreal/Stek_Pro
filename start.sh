@@ -22,11 +22,15 @@ fi
 echo "Копируем файлы и директории в /home/pi/Desktop/modules"
 cp -r "$CLONE_DIR"/* "/home/pi/Desktop/modules/"
 
+
 # Проверяем, существует ли виртуальное окружение
 if [ -d "$VENV_PATH" ]; then
-  # Добавляем команду активации виртуального окружения в /etc/profile
-  echo 'source /home/pi/Desktop/modules/venv/bin/activate' >> /etc/profile
-  echo "Команда активации виртуального окружения добавлена в /etc/profile."
+  if ! grep -q "source $VENV_PATH/bin/activate" ~/.bashrc; then
+    echo 'source /home/pi/Desktop/modules/venv/bin/activate' >> ~/.bashrc
+    echo "Команда активации виртуального окружения добавлена в ~/.bashrc."
+  fi
+  echo "Устанавливаем необходимые библиотеки..."
+  pip3 install RPi.GPIO opencv-python Adafruit_DHT paho-mqtt
 else
   echo "Виртуальное окружение не найдено."
 fi
